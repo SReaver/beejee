@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import classes from './AddTask.module.css';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import * as actions from '../Store/actions';
 
 class AddTask extends Component {
   state = {
@@ -15,16 +15,13 @@ class AddTask extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
+    console.log('pageNum', this.props.pageNum);
     let form = new FormData();
     form.append("username", this.state.username);
     form.append("email", this.state.email);
     form.append("text", this.state.text);
-    axios.post('https://uxcandy.com/~shapoval/test-task-backend/create?developer=Example', form)
-      .then(res => { console.log(res); })
-    //   .then(() => {
-    //     console.log(this.props.getState());
-    //   })
+    this.props.addTask(form);
+    this.props.fetchData(this.props.pageNum);
   }
   render() {
     return (
@@ -34,7 +31,7 @@ class AddTask extends Component {
           <input type="text" value={this.state.username} name="username" onChange={this.handleInputChange} placeholder="Enter your name" />
           <input type="email" value={this.state.email} name="email" onChange={this.handleInputChange} placeholder="Enter your email" />
           <textarea value={this.state.task} name="text" onChange={this.handleInputChange} />
-          <input type="submit" onClick={(event) => this.props.handleSubmit(event)} value="Submit" />
+          <input type="submit" onClick={((e) => this.handleSubmit(e))} value="Submit" />
         </form>
       </div>
     )
@@ -42,13 +39,16 @@ class AddTask extends Component {
 }
 const mapStateToProps = state => {
   return {
-    isAuth: state.auth !== null,
-    tasks: state.tasks
+    // isAuth: state.auth !== null,
+    //tasks: state.tasks
+    pageNum: state.pageNum
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    addTask: (task) => dispatch(actions.addTask(task)),
+    fetchData: (pageNum) => dispatch(actions.fetchData(pageNum)),
     onAdd: (username, email, text) => dispatch({ type: 'ADD_TASK', taskData: { username, email, text } }),
     onDelete: (id) => dispatch({ type: 'DELETE', id: id })
   };
