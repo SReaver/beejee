@@ -62,8 +62,7 @@ class App extends Component {
               {tasks}
             </tbody>
           </table>
-          <div>    {pages}</div>
-
+          <div>{pages}</div>
           Total: {this.props.totalTaskCount ? this.props.totalTaskCount : 0}
         </header>
       </div>
@@ -77,7 +76,9 @@ const mapStateToProps = state => {
     //  isAuth: state.auth,
     pageNum: state.pageNum,
     tasks: state.tasks,
-    totalTaskCount: state.totalTaskCount || null
+    totalTaskCount: state.totalTaskCount,
+    authenticated: state.authenticated,
+    showModal: state.showModal
   };
 };
 

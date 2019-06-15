@@ -4,6 +4,8 @@ const initialState = {
     tasks: null,
     totalTaskCount: 0,
     pageNum: 0,
+    authenticated: false,
+    showModal: false
 }
 const reducer = (state = initialState, action) => {
     switch (action.type) {
