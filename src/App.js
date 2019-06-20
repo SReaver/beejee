@@ -4,6 +4,9 @@ import AddTask from './Components/AddTask/AddTask';
 import './App.css';
 import { connect } from 'react-redux';
 import * as actions from './Components/Store/actions';
+import Modal from './Components/Modal/Modal';
+import LoginForm from './Components/LoginForm/LoginForm';
+import EditTaskForm from './Components/EditTaskForm/EditTaskForm';
 
 class App extends Component {
 
@@ -20,6 +23,7 @@ class App extends Component {
     }
     this.props.saveSortData(arr);
   }
+
   render() {
     //console.log('app.js this.props.tasks ', this.props.tasks);
 
@@ -45,9 +49,16 @@ class App extends Component {
     return (
       <div className="App" >
         <header className="App-header">
-          <AddTask
-            handleSubmit={this.props.onAdd}
-          />
+          <div style={{ textAlign: "right", width: "50%" }}>
+            {this.props.authenticated ? <span onClick={() => this.props.authenticate(false)}>LogOut</span> : <span onClick={this.props.openModal}>LogIn</span>}
+          </div>
+          <Modal
+            show={this.props.showModal}
+            closeModal={this.props.closeModal}
+          >
+            {this.props.showLoginForm ? <LoginForm /> : this.props.showEditTaskForm ? <EditTaskForm id={this.props.taskId} /> : null}
+          </Modal>
+          <AddTask />
           <table>
             <tbody>
               <tr>
@@ -73,12 +84,13 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    //  isAuth: state.auth,
     pageNum: state.pageNum,
     tasks: state.tasks,
     totalTaskCount: state.totalTaskCount,
     authenticated: state.authenticated,
-    showModal: state.showModal
+    showModal: state.showModal,
+    showLoginForm: state.showLoginForm,
+    showEditTaskForm: state.showEditTaskForm
   };
 };
 
@@ -86,10 +98,12 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchData: (sort_field, sort_direction, pageNum) => dispatch(actions.fetchData(sort_field, sort_direction, pageNum)),
     saveSortData: (sortedData) => dispatch(actions.saveData(sortedData)),
-    onAdd: (username, email, text) => dispatch({ type: 'ADD_TASK', taskData: { username, email, text } }),
-    onDelete: (id) => dispatch({ type: 'DELETE', id: id }),
+    authenticate: (payload) => dispatch({ type: actions.AUTHENTICATE, payload }),
+    openModal: () => dispatch({ type: actions.SHOW_MODAL, payload: true }),
+    closeModal: () => dispatch({ type: actions.SHOW_MODAL, payload: false })
+    //onDelete: (id) => dispatch({ type: 'DELETE', id: id }),
     //setTotalTasksCount: (count) => dispatch({ type: actions.SET_TOTAL_TASKS_COUNT, payload: count }),
-    onPageSelect: (page) => dispatch({})
+    //onPageSelect: (page) => dispatch({})
   };
 };
 

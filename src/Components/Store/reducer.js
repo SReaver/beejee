@@ -5,7 +5,11 @@ const initialState = {
     totalTaskCount: 0,
     pageNum: 0,
     authenticated: false,
-    showModal: false
+    showModal: false,
+
+    showLoginForm: true,
+    showEditTaskForm: false,
+    taskId: null
 }
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -16,6 +20,12 @@ const reducer = (state = initialState, action) => {
             return updateObject(state, { tasks: action.payload })
         case actionTypes.SET_PAGE_NUM:
             return updateObject(state, { pageNum: action.payload })
+        case actionTypes.AUTHENTICATE:
+            return updateObject(state, { authenticated: action.payload })
+        case actionTypes.SHOW_MODAL:
+            return updateObject(state, { showModal: action.payload })
+        case actionTypes.SET_TASK_ID:
+            return updateObject(state, { taskId: action.payload })
         default: return state;
     }
 }

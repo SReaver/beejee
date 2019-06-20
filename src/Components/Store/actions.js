@@ -8,6 +8,9 @@ export const SET_PAGE_NUM = 'SET_PAGE_NUM';
 export const SAVE_DATA = 'SAVE_DATA';
 export const SET_SORTING_DIRECTION = 'SET_SORTING_DIRECTION';
 export const SET_SORTING_PARAM = 'SET_SORTING_PARAM';
+export const AUTHENTICATE = 'AUTHENTICATE';
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const SET_TASK_ID = 'SET_TASK_ID';
 
 export const saveData = (res) => {
     return {
@@ -28,15 +31,27 @@ export const setPageNum = (pageNum) => {
         payload: pageNum
     }
 }
-export const setSortDirection = (method) => {
+// export const setSortDirection = (method) => {
+//     return {
+//         type: SET_SORTING_DIRECTION,
+//         payload: method
+//     }
+// }
+// export const setSortParam = (param) => {
+//     return {
+//         type: SET_SORTING_PARAM,
+//         payload: param
+//     }
+// }
+export const authenticate = (param) => {
     return {
-        type: SET_SORTING_DIRECTION,
-        payload: method
+        type: AUTHENTICATE,
+        payload: param
     }
 }
-export const setSortParam = (param) => {
+export const setTaskId = (param) => {
     return {
-        type: SET_SORTING_PARAM,
+        type: SET_TASK_ID,
         payload: param
     }
 }

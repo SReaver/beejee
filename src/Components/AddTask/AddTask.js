@@ -49,8 +49,8 @@ const mapDispatchToProps = dispatch => {
   return {
     addTask: (task) => dispatch(actions.addTask(task)),
     fetchData: (pageNum) => dispatch(actions.fetchData(pageNum)),
-    onAdd: (username, email, text) => dispatch({ type: 'ADD_TASK', taskData: { username, email, text } }),
-    onDelete: (id) => dispatch({ type: 'DELETE', id: id })
+    // onAdd: (username, email, text) => dispatch({ type: 'ADD_TASK', taskData: { username, email, text } }),
+    // onDelete: (id) => dispatch({ type: 'DELETE', id: id })
   };
 };
 
